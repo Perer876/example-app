@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/tasks', function () {
+    $tareas = DB::table('tasks')->get();
+    return view('tasks.indexTasks', ['tareas' => $tareas]);
+    // return view('tasks.indexTasks', compact('tareas));
 });
