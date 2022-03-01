@@ -8,6 +8,7 @@
 </head>
 <body>
     <h1>Tareas</h1>
+    <a href="/tasks/create">Agregar tarea</a>
     <table>
         <thead>
             <tr>
