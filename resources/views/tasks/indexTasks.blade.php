@@ -30,6 +30,7 @@
                 <th>{{$tarea->deadline}}</th>
                 <th>
                     <a href="/tasks/{{ $tarea->id}}">Ver</a>
+                    <a href="/tasks/{{ $tarea->id}}/edit">Editar</a>
                 </th>
             </tr>
             @endforeach

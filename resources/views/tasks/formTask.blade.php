@@ -7,8 +7,15 @@
     <title>Agregar tarea</title>
 </head>
 <body>
-    <h1>Agregar Tarea</h1>
-    <form action="/tasks" method="post">
+    @isset($task)
+        <h1>Modificar Tarea</h1>
+        <form action="/tasks/{{ $task->id }}" method="post">
+        @method('PATCH')
+    @else
+        <h1>Agregar Tarea</h1>
+        <form action="/tasks" method="post">    
+    @endisset
+
         @csrf
         <label for="user">Usuario</label>
         <input type="text" name="user" id="user" value="{{ old('user') }}">

@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
+    private $form_rules = [
+        'user' => 'required|max:75',
+        'priority' => ['required','integer'],
+        'description' => 'required|max:255',
+        'deadline' => 'required|date'
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -40,12 +46,7 @@ class TaskController extends Controller
         // $request->name
         
         // Validamos la entrada de datos entrantes
-        $validated = $request->validate([
-            'user' => 'required|max:75',
-            'priority' => ['required','integer'],
-            'description' => 'required|max:255',
-            'deadline' => 'required|date'
-        ]);
+        $validated = $request->validate($this->form_rules);
 
         // Hacemos la inserción del registro
         $task = new Task();
@@ -78,9 +79,9 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Task $task)
     {
-        //
+        return view('tasks.formTask', compact('task'));
     }
 
     /**
@@ -90,9 +91,21 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Task $task)
     {
-        //
+        // Validamos la entrada de datos entrantes
+        $validated = $request->validate($this->form_rules);
+
+        // Actualizamos el registro existente
+        $task->user = $request->user;
+        $task->priority = $request->priority;
+        $task->description = $request->description;
+        $task->deadline = $request->deadline;
+
+        $task->save();
+
+        // Redireccionamos al objeto
+        return redirect('/tasks/' . $task->id);
     }
 
     /**
