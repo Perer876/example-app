@@ -15,32 +15,39 @@
         <h1>Agregar Tarea</h1>
         <form action="/tasks" method="post">    
     @endisset
-
         @csrf
         <label for="user">Usuario</label>
-        <input type="text" name="user" id="user" value="{{ old('user') }}">
+        <input type="text" name="user" id="user" value="{{ strlen(old('user')) > 0 ? old('user') : (isset($task) ? $task->user : '')}}">
         @error('user')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
         <br>
         <label for="priority">Prioridad</label>
         <select name="priority" id="priority">
-            <option value="1" {{ 1 == old('priority') ? 'selected' : ''}}>Alta</option>
-            <option value="2" {{ 2 == old('priority') ? 'selected' : ''}}>Media</option>
-            <option value="3" {{ 3 == old('priority') ? 'selected' : ''}}>Baja</option>
+            @php
+                function isSelected($value, $priority) {
+                    if(strlen(old('user')) > 0) {
+                        return ($value == old('priority') ? 'selected' : '');
+                    }
+                    return ($priority ? 'selected' : '');
+                }
+            @endphp
+            <option value="1" {{ isSelected(1, (isset($task) && 1 == $task->priority)) }}>Alta</option>
+            <option value="2" {{ isSelected(2, (isset($task) && 2 == $task->priority)) }}>Media</option>
+            <option value="3" {{ isSelected(3, (isset($task) && 3 == $task->priority)) }}>Baja</option>
         </select>
         @error('priority')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
         <br>
         <label for="description">Descripción</label>
-        <input type="text" name="description" id="description" value="{{ old('description') }}">
+        <input type="text" name="description" id="description" value="{{ strlen(old('description')) > 0 ? old('description') : (isset($task) ? $task->description : '')}}">
         @error('description')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
         <br>
         <label for="deadline">Fecha</label>
-        <input type="text" name="deadline" id="deadline" value="{{ old('deadline') }}">
+        <input type="text" name="deadline" id="deadline" value="{{ strlen(old('deadline')) > 0 ? old('deadline') : (isset($task) ? $task->deadline : '')}}">
         @error('deadline')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
