@@ -35,8 +35,30 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        dd($request);
+        // $request->all()
+        // $request->input('name')
+        // $request->name
+        
+        // Validamos la entrada de datos entrantes
+        $validated = $request->validate([
+            'user' => 'required|max:75',
+            'priority' => ['required','integer'],
+            'description' => 'required|max:255',
+            'deadline' => 'required|date'
+        ]);
+
+        // Hacemos la inserción del registro
+        $task = new Task();
+
+        $task->user = $request->user;
+        $task->priority = $request->priority;
+        $task->description = $request->description;
+        $task->deadline = $request->deadline;
+
+        $task->save();
+
+        // Redireccionamos al indice
+        return redirect('/tasks');
     }
 
     /**
