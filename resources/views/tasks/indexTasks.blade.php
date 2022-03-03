@@ -17,6 +17,7 @@
                 <th>Prioridad</th>
                 <th>Descripción</th>
                 <th>Fecha</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -27,6 +28,9 @@
                 <th>{{$tarea->priority}}</th>
                 <th>{{$tarea->description}}</th>
                 <th>{{$tarea->deadline}}</th>
+                <th>
+                    <a href="/tasks/{{ $tarea->id}}">Ver</a>
+                </th>
             </tr>
             @endforeach
         </tbody>    
