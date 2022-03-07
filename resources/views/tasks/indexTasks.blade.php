@@ -29,8 +29,13 @@
                 <th>{{$tarea->description}}</th>
                 <th>{{$tarea->deadline}}</th>
                 <th>
-                    <a href="/tasks/{{ $tarea->id}}">Ver</a>
-                    <a href="/tasks/{{ $tarea->id}}/edit">Editar</a>
+                    <a href="/tasks/{{ $tarea->id }}">Ver</a>
+                    <a href="/tasks/{{ $tarea->id }}/edit">Editar</a>
+                    <form action="/tasks/{{$tarea->id}}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <input type="submit" value="Borrar">
+                    </form>
                 </th>
             </tr>
             @endforeach
